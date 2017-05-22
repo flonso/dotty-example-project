@@ -1,22 +1,19 @@
-trait Base {
-  def message: String
-}
-class A extends Base {
-  def message: String = "Hello"
-}
-class B extends Base {
-  def message: String = "Dotty!"
-}
+object Bank {
+  case class Acc(checking : BigInt, savings : BigInt)
+ 
+  def putAside(x: BigInt, a: Acc): Acc = {
+    require (notRed(a) && a.checking >= x && x >= 0)
+    Acc(a.checking - x, a.savings + x)
+  } ensuring {
+    r => notRed(r) && sameTotal(a, r)
+  }
+ 
 
-object Hello {
-  // Union types only exist in Dotty, so there's no chance that this will
-  // accidentally be compiled with Scala 2
-  def printMessages(msgs: (A | B)*) = println(msgs.map(_.message).mkString(" "))
-  def main(args: Array[String]): Unit = {
-    printMessages(new A, new B)
-
-    // Sanity check the classpath: this won't run if the dotty jar is not present.
-    val x: Int => Int = z => z
-    x(1)
+  def sameTotal(a1: Acc, a2: Acc): Boolean = {
+    a1.checking + a1.savings == a2.checking + a2.savings
+  }
+  
+  def notRed(a: Acc) : Boolean = {
+    a.checking >= 0 && a.savings >= 0
   }
 }
