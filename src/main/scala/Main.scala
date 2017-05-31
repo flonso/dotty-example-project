@@ -7,7 +7,6 @@ object Bank {
   } ensuring {
     r => notRed(r) && sameTotal(a, r)
   }
- 
 
   def sameTotal(a1: Acc, a2: Acc): Boolean = {
     a1.checking + a1.savings == a2.checking + a2.savings
