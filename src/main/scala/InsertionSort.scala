@@ -1,7 +1,7 @@
 /* Copyright 2009-2016 EPFL, Lausanne */
 
-import stainless.annotation._
-import stainless.lang._
+//import stainless.annotation._
+//import stainless.lang._
 
 object InsertionSort {
   sealed abstract class List
