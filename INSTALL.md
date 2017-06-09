@@ -1,9 +1,11 @@
-Create a working directory to clone all source codes into :
+## Installation instructions
+
+### Create a working directory to clone all source codes into :
 
 $ mkdir project
 $ cd project
 
-Install the language server along with the supported version of dotty :
+## Install the language server along with the supported version of dotty :
 
 $ git clone --recursive https://github.com/flonso/dotty
 $ cd dotty 
@@ -26,26 +28,31 @@ $ cd .. # you should now be inside "project" folder
 
 Update the path to Stainless used by the language server :
 
-$ nano dotty/compiler/src/dotty/tools/dotc/interactive/InteractiveDriver.scala
 
-Inside the run() function, update the basePath value from :
-'' val basePath = "/home/florian/Desktop/EPFL/Master/sav/project/stainless/"
-to :
+#### dotty/compiler/src/dotty/tools/dotc/interactive/InteractiveDriver.scala
+```scala
+def run() = {
+	// ...
+	val basePath = "/absolute/path/to/your/cloned/stainless"
+	val stainlessLibraryFiles = List(/*...*/)
+	// ...
+}
+```
 
-'' val basePath = "/absolute/path/to/your/cloned/stainless"
-
-Publish the local version of the language server :
+Publish a local version of the language server :
 $ cd dotty/
 $ sbt
 $ > publishLocal
+$ cd .. # you should now be inside "project" folder
 
-Install vsce in order to publish the vscode extension
+### Install vsce in order to publish the vscode extension
 
 $ sudo npm -g install vsce 
 $ cd dotty/vscode-dotty
 $ vsce package
+$ cd ../.. # you should now be inside "project" folder
 
-Clone and checkout the example project:
+### Clone and checkout the example project:
 
 $ git clone https://github.com/flonso/dotty-example-project
 $ cd dotty-example-project
@@ -53,7 +60,7 @@ $ git checkout vscode
 $ sbt configureIDE
 $ echo "ch.epfl.lamp:dotty-language-server_2.11:0.2.0-bin-SNAPSHOT-nonbootstrapped" > .dotty-ide-artifact
 
-Finally launch VS Code by loading the extension :
+### Finally launch VS Code by loading the extension :
 
 $ cd dotty-example-project
 $ code --extensionDevelopmentPath=$PWD/../dotty/vscode-dotty .
